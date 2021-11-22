@@ -59,10 +59,8 @@ except:
 
 def imread2f(stream, channel = 1, dtype = np.float32):
     try:
-        print("RAW")
         return imread2f_raw(stream, channel=channel, dtype=dtype)
     except:
-        print("PIL")
         return imread2f_pil(stream, channel=channel, dtype=dtype)
     
     
