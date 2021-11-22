@@ -32,11 +32,15 @@ from scipy.ndimage.filters import minimum_filter
 from sklearn import metrics
 
 img, mode = imread2f(imgfilename, channel = 3)
-gt = imread2f(reffilename, channel = 1)[0]>0.5
+gt , mode = imread2f(reffilename, channel = 1)
+print(mode)
 plt.figure(figsize=(1,1))
 plt.imshow(gt)
 plt.title('GT')
 plt.show()
+gt = gt > 0.5
+
+
 
 print('size : ', img.shape)
 assert(img.shape[0]==gt.shape[0])
