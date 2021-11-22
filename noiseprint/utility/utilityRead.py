@@ -59,9 +59,11 @@ except:
 
 def imread2f(stream, channel = 1, dtype = np.float32):
     try:
-       return imread2f_raw(stream, channel=channel, dtype=dtype)
+        print("RAW")
+        return imread2f_raw(stream, channel=channel, dtype=dtype)
     except:
-       return imread2f_pil(stream, channel=channel, dtype=dtype)
+        print("PIL")
+        return imread2f_pil(stream, channel=channel, dtype=dtype)
     
     
 def jpeg_qtableinv(stream, tnum=0, force_baseline=None):
