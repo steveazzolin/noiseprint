@@ -33,7 +33,7 @@ from sklearn import metrics
 
 img, mode = imread2f(imgfilename, channel = 3)
 gt , mode = imread2f(reffilename, channel = 1)
-print(mode)
+print(mode, np.unique(gt))
 plt.figure(figsize=(1,1))
 plt.imshow(gt)
 plt.title('GT')
