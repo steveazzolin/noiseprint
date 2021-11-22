@@ -59,7 +59,7 @@ range0  = dat['range0'].flatten()
 range1  = dat['range1'].flatten()
 imgsize = dat['imgsize'].flatten()
 mapp    = genMappFloat(dat['map'], valid, range0,range1, imgsize)
-print(mapp)
+print(mapp, min(mapp.flatten()), max(mapp.flatten()))
 print(range0, range1, imgsize)
 
 plt.figure(figsize=(3*5,2*5))
