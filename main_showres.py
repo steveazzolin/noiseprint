@@ -59,6 +59,7 @@ range0  = dat['range0'].flatten()
 range1  = dat['range1'].flatten()
 imgsize = dat['imgsize'].flatten()
 mapp    = genMappFloat(dat['map'], valid, range0,range1, imgsize)
+print(mapp, min(mapp), max(mapp))
 
 plt.figure(figsize=(3*5,2*5))
 grid = gridspec.GridSpec(2, 3, wspace=0.2, hspace=0.2, )
