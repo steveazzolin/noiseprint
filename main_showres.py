@@ -33,6 +33,11 @@ from sklearn import metrics
 
 img, mode = imread2f(imgfilename, channel = 3)
 gt = imread2f(reffilename, channel = 1)[0]>0.5
+plt.figure(figsize=(1,1))
+plt.imshow(gt)
+plt.title('GT')
+plt.show()
+
 print('size : ', img.shape)
 assert(img.shape[0]==gt.shape[0])
 assert(img.shape[1]==gt.shape[1])
