@@ -38,7 +38,7 @@ plt.figure(figsize=(1,1))
 plt.imshow(gt)
 plt.title('GT')
 plt.show()
-gt = gt > 0.5
+gt = gt >= 0.5
 
 
 
