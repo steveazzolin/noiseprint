@@ -33,13 +33,7 @@ from sklearn import metrics
 
 img, mode = imread2f(imgfilename, channel = 3)
 gt , mode = imread2f(reffilename, channel = 1)
-print(mode, np.unique(gt))
-plt.figure(figsize=(1,1))
-plt.imshow(gt)
-plt.title('GT')
-plt.show()
-gt = gt >= 0.5
-
+gt = gt >= 0.5 #to tackle also grey areas of Realistic Tampering dataset
 
 
 print('size : ', img.shape)
