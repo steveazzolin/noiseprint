@@ -117,7 +117,6 @@ def EMgu(feats, seed = 0, maxIter = 100, replicates = 10, outliersNlogl = 42):
 
 
 
-@jit(nopython=True)
 def EMgu_img(spam, valid, extFeat = range(32), seed = 0, maxIter = 100, replicates = 10, outliersNlogl = 42):
     shape_spam = spam.shape
     list_spam  = spam.reshape([shape_spam[0]*shape_spam[1],shape_spam[2]])
