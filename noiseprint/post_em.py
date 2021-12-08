@@ -36,7 +36,6 @@ from numba import jit
 
 @jit(nopython=True)
 def faetReduce(feat_list, inds, whiteningFlag = False):
-    print(feat_list)
     cov_mtx = np.cov(feat_list, rowvar = False, bias = True)
     w, v = np.linalg.eigh(cov_mtx)
     w = w[::-1]
@@ -122,6 +121,7 @@ def EMgu_img(spam, valid, extFeat = range(32), seed = 0, maxIter = 100, replicat
     shape_spam = spam.shape
     list_spam  = spam.reshape([shape_spam[0]*shape_spam[1],shape_spam[2]])
     list_valid = list_spam[valid.flatten(),:]
+    print(feat_list)
     L, eigs = faetReduce(list_valid, extFeat, True)
     list_spam = np.matmul(list_spam, L)
     list_valid = list_spam[valid.flatten(), :]
