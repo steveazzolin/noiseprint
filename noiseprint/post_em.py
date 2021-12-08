@@ -32,6 +32,8 @@ satutationProb = 0.95
 win_v = 5
 win_z = 35
 
+from numba import jit
+
 @jit(nopython=True)
 def faetReduce(feat_list, inds, whiteningFlag = False):
     cov_mtx = np.cov(feat_list, rowvar = False, bias = True)
@@ -114,7 +116,7 @@ def EMgu(feats, seed = 0, maxIter = 100, replicates = 10, outliersNlogl = 42):
     return mahal, other
 
 
-from numba import jit
+
 @jit(nopython=True)
 def EMgu_img(spam, valid, extFeat = range(32), seed = 0, maxIter = 100, replicates = 10, outliersNlogl = 42):
     shape_spam = spam.shape
