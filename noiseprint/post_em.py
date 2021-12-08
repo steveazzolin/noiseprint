@@ -36,6 +36,7 @@ from numba import jit
 
 @jit(nopython=True)
 def faetReduce(feat_list, inds, whiteningFlag = False):
+    print(feat_list)
     cov_mtx = np.cov(feat_list, rowvar = False, bias = True)
     w, v = np.linalg.eigh(cov_mtx)
     w = w[::-1]
