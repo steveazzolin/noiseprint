@@ -121,8 +121,8 @@ def EMgu_img(spam, valid, extFeat = range(32), seed = 0, maxIter = 100, replicat
     shape_spam = spam.shape
     list_spam  = spam.reshape([shape_spam[0]*shape_spam[1],shape_spam[2]])
     list_valid = list_spam[valid.flatten(),:]
-    print(list_valid)
-    L, eigs = faetReduce(list_valid, extFeat, True)
+    #print(list_valid)
+    L, eigs = faetReduce(list_valid, list(extFeat), True)
     list_spam = np.matmul(list_spam, L)
     list_valid = list_spam[valid.flatten(), :]
     
