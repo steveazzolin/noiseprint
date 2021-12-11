@@ -188,7 +188,7 @@ class gm:
         return nlogl, mahal
 
     @staticmethod
-    @jit(nopython=True)
+    @jit(nopython=True, fastmath=True)
     def tmp(lowMtx, Xmu):
         return np.linalg.solve(lowMtx, Xmu.transpose()).transpose()
 
