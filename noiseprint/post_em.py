@@ -89,7 +89,6 @@ def getSpamFromNoiseprint(res, img_gray, ksize=ksize_default, stride=stride_defa
     return spam, valid, range0, range1, imgsize
 
 def EMgu(feats, seed = 0, maxIter = 100, replicates = 10, outliersNlogl = 42):
-
     randomState = np.random.RandomState(seed)
     gm_data = gm(feats.shape[1], [0,], [2,], outliersProb = 0.01, outliersNlogl = outliersNlogl, dtype=list_valid.dtype)
     gm_data.setRandomParams(feats, regularizer = -1.0, randomState = randomState)

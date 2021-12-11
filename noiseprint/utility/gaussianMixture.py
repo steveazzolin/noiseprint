@@ -173,7 +173,7 @@ class gm:
             Xmu =  X - self.mu[k,:]
 
             if sigmaType == 2:  # full covariance
-                Xmu = self.tmp(lowMtx, Xmu) #np.linalg.solve(lowMtx, Xmu.transpose()).transpose()
+                Xmu = np.linalg.solve(lowMtx, Xmu.transpose()).transpose() # self.tmp(lowMtx, Xmu) #
             elif sigmaType == 1:  # diagonal covariance
                 Xmu = Xmu / lowMtx
             else:  # isotropic covariance
@@ -185,7 +185,6 @@ class gm:
 
         if self.outliersProb >= 0:
             nlogl[:, K] = self.outliersNlogl
-
         return nlogl, mahal
 
     @staticmethod
@@ -202,7 +201,6 @@ class gm:
             #print(self.outliersProb)
             logPrb = np.append(logPrb.squeeze(), np.log(self.outliersProb))
             logPrb = logPrb.reshape((-1,1))
-
         return logPrb.transpose((1,0)) - nlogl
 
     def getLoglhInlier(self, X):
