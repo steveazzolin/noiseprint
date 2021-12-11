@@ -176,7 +176,7 @@ class gm:
             Xmu =  X - self.mu[k,:]
 
             if sigmaType == 2:  # full covariance
-                Xmu = self.tmp(lowMtx, Xmu) #np.linalg.solve(lowMtx, Xmu.transpose()).transpose()
+                Xmu = jnp.linalg.solve(lowMtx, Xmu.transpose()).transpose() #self.tmp(lowMtx, Xmu) #
             elif sigmaType == 1:  # diagonal covariance
                 Xmu = Xmu / lowMtx
             else:  # isotropic covariance
