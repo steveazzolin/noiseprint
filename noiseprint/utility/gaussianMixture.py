@@ -13,6 +13,8 @@ from scipy.linalg import eigvalsh
 from numpy.linalg import cholesky
 from numpy.linalg import eigh
 
+from numba import jit
+
 class gm:
     prioriProb = 0
     outliersProb = 0
@@ -170,7 +172,7 @@ class gm:
             Xmu =  X - self.mu[k,:]
 
             if sigmaType == 2:  # full covariance
-                Xmu = np.linalg.solve(lowMtx, Xmu.transpose()).transpose()
+                Xmu = self.tmp(lowMtx, Xmu) #np.linalg.solve(lowMtx, Xmu.transpose()).transpose()
             elif sigmaType == 1:  # diagonal covariance
                 Xmu = Xmu / lowMtx
             else:  # isotropic covariance
@@ -184,6 +186,11 @@ class gm:
             nlogl[:, K] = self.outliersNlogl
 
         return nlogl, mahal
+
+    @staticmethod
+    @jit(nopython=True)
+    def tmp(lowMtx, Xmu):
+        return np.linalg.solve(lowMtx, Xmu.transpose()).transpose()
 
     def getLoglh(self, X):
         nlogl, _ = self.getNlogl(X)
