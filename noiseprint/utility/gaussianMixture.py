@@ -182,7 +182,7 @@ class gm:
             else:  # isotropic covariance
                 Xmu = Xmu / lowMtx
 
-            mahal[:,k] = np.sum(Xmu * Xmu, axis = 1)
+            mahal = mahal.at[:,k].set(jnp.sum(Xmu * Xmu, axis = 1))
 
             nlogl[:,k] = 0.5 * (mahal[:,k] + logDet + constPi)
 
