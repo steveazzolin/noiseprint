@@ -133,7 +133,7 @@ class gm:
         K0 = K
         if self.outliersProb >= 0: K0 = K+1
 
-        nlogl = jnp.zeros([N, K0], dtype = dtype)
+        nlogl = np.zeros([N, K0], dtype = dtype)
         mahal = jnp.zeros([N, K ], dtype = dtype)
         listLogDet = [None, ] * S
         listLowMtx = [None, ] * S
