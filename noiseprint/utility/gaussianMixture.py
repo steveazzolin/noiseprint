@@ -142,21 +142,26 @@ class gm:
             sigma = self.listSigma[s]
             if sigmaType == 2:  # full covariance
                 try:
-                    listLowMtx[s] = cholesky(sigma)
+                    listLowMtx[s] = jnp.cholesky(sigma)
                 except:
                     # exceptional regularization
-                    sigma_w, sigma_v = eigh(jnp.real(sigma))
+                    sigma_w, sigma_v = jnp.eigh(jnp.real(sigma))
+                    sigma_w, sigma_v = device_put(sigma_w) , device_put(sigma_v)
                     sigma_w = jnp.maximum(sigma_w, jnp.spacing(jnp.max(sigma_w)))
                     sigma = jnp.matmul(jnp.matmul(sigma_v, jnp.diag(sigma_w)), (jnp.transpose(sigma_v,[1,0])))
+                    sigma = device_put(sigma)
                     try:
-                        listLowMtx[s] = cholesky(sigma)
+                        listLowMtx[s] = jnp.cholesky(sigma)
                     except:
-                        sigma_w, sigma_v = eigh(jnp.real(sigma))
+                        sigma_w, sigma_v = jnp.eigh(jnp.real(sigma))
+                        sigma_w = device_put(sigma_w)
+                        sigma_v = device_put(sigma_v)
                         sigma_w = jnp.maximum(sigma_w, jnp.spacing(jnp.max(sigma_w)))
                         #print(np.min(sigma_w))
                         sigma = jnp.matmul(jnp.matmul(sigma_v, jnp.diag(sigma_w)), (jnp.transpose(sigma_v,[1,0])))
+                        sigma = device_put(sigma)
                         #print(sigma)
-                        listLowMtx[s] = cholesky(sigma)
+                        listLowMtx[s] = jnp.cholesky(sigma)
                 diagLowMtx = jnp.diag(listLowMtx[s])
                 listLogDet[s] = 2 * jnp.sum(jnp.log(diagLowMtx))
             elif sigmaType == 1:  # diagonal covariance
