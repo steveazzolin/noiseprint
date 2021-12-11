@@ -35,7 +35,7 @@ win_v = 5
 win_z = 35
 
 
-@jit(nopython=True)
+#@jit(nopython=True)
 def faetReduce(feat_list, inds, whiteningFlag = False):
     cov_mtx = np.cov(feat_list, rowvar = False, bias = True)
     w, v = np.linalg.eigh(cov_mtx)
