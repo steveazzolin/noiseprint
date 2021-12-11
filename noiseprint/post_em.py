@@ -21,6 +21,8 @@ import skimage.morphology as ski
 from .feat_spam.spam_np_opt import getSpamRes
 from .utility.gaussianMixture import gm
 
+from numba import jit
+
 paramSpam_default = {'resTranspose': False, 'uniformQuant': False, \
             'values': np.asarray([-0.8,-0.28,+0.16,+0.7]), \
             'ordCooc': 4, 'mapper': list(), \
@@ -32,7 +34,6 @@ satutationProb = 0.95
 win_v = 5
 win_z = 35
 
-from numba import jit
 
 @jit(nopython=True)
 def faetReduce(feat_list, inds, whiteningFlag = False):
