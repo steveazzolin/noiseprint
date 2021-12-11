@@ -15,6 +15,9 @@ from numpy.linalg import eigh
 
 from numba import jit
 import torch
+import jax.numpy as jnp
+from jax import device_put
+
 
 class gm:
     prioriProb = 0
@@ -130,8 +133,8 @@ class gm:
         K0 = K
         if self.outliersProb >= 0: K0 = K+1
 
-        nlogl = np.zeros([N, K0], dtype = dtype)
-        mahal = np.zeros([N, K ], dtype = dtype)
+        nlogl = jnp.zeros([N, K0], dtype = dtype)
+        mahal = jnp.zeros([N, K ], dtype = dtype)
         listLogDet = [None, ] * S
         listLowMtx = [None, ] * S
         for s in range(S):
@@ -142,26 +145,26 @@ class gm:
                     listLowMtx[s] = cholesky(sigma)
                 except:
                     # exceptional regularization
-                    sigma_w, sigma_v = eigh(np.real(sigma))
-                    sigma_w = np.maximum(sigma_w, np.spacing(np.max(sigma_w)))
-                    sigma = np.matmul(np.matmul(sigma_v, np.diag(sigma_w)), (np.transpose(sigma_v,[1,0])))
+                    sigma_w, sigma_v = eigh(jnp.real(sigma))
+                    sigma_w = jnp.maximum(sigma_w, jnp.spacing(jnp.max(sigma_w)))
+                    sigma = jnp.matmul(jnp.matmul(sigma_v, jnp.diag(sigma_w)), (jnp.transpose(sigma_v,[1,0])))
                     try:
                         listLowMtx[s] = cholesky(sigma)
                     except:
-                        sigma_w, sigma_v = eigh(np.real(sigma))
-                        sigma_w = np.maximum(sigma_w, np.spacing(np.max(sigma_w)))
+                        sigma_w, sigma_v = eigh(jnp.real(sigma))
+                        sigma_w = jnp.maximum(sigma_w, jnp.spacing(jnp.max(sigma_w)))
                         #print(np.min(sigma_w))
-                        sigma = np.matmul(np.matmul(sigma_v, np.diag(sigma_w)), (np.transpose(sigma_v,[1,0])))
+                        sigma = jnp.matmul(jnp.matmul(sigma_v, jnp.diag(sigma_w)), (jnp.transpose(sigma_v,[1,0])))
                         #print(sigma)
                         listLowMtx[s] = cholesky(sigma)
-                diagLowMtx = np.diag(listLowMtx[s])
-                listLogDet[s] = 2 * np.sum(np.log(diagLowMtx))
+                diagLowMtx = jnp.diag(listLowMtx[s])
+                listLogDet[s] = 2 * jnp.sum(jnp.log(diagLowMtx))
             elif sigmaType == 1:  # diagonal covariance
-                listLowMtx[s] = np.sqrt(sigma)
-                listLogDet[s] = np.sum(np.log(sigma))
+                listLowMtx[s] = jnp.sqrt(sigma)
+                listLogDet[s] = jnp.sum(jnp.log(sigma))
             else: # isotropic covariance
-                listLowMtx[s] = np.sqrt(sigma)
-                listLogDet[s] = dim * np.log(sigma)
+                listLowMtx[s] = jnp.sqrt(sigma)
+                listLogDet[s] = dim * jnp.log(sigma)
 
         constPi = dim*np.log(2*np.pi)
         for k in range(K):
