@@ -19,7 +19,7 @@ from .utility.utilityRead import resizeMapWithPadding
 from .utility.utilityRead import imread2f
 from .utility.utilityRead import jpeg_qtableinv
 
-def noiseprint_blind_file(filename, model_name='net'):
+def noiseprint_blind_file(filename, model_name='net',return_noiseprint=False):
     try:
         img, mode = imread2f(filename, channel=1)
     except:
@@ -32,8 +32,12 @@ def noiseprint_blind_file(filename, model_name='net'):
     except:
         QF = 200
         
-    mapp, valid, range0, range1, imgsize, other = noiseprint_blind(img, QF, model_name=model_name)
-    return QF, mapp, valid, range0, range1, imgsize, other
+    if return_noiseprint:
+        noiseprint , mapp, valid, range0, range1, imgsize, other = noiseprint_blind(img, QF, model_name=model_name,return_noiseprint=True)
+        return noiseprint , QF, mapp, valid, range0, range1, imgsize, other
+    else:
+        mapp, valid, range0, range1, imgsize, other = noiseprint_blind(img, QF, model_name=model_name,return_noiseprint=False)
+        return QF, mapp, valid, range0, range1, imgsize, other
 
 def noiseprint_blind(img, QF, model_name='net', return_noiseprint=False):
     res = genNoiseprint(img, QF, model_name)
