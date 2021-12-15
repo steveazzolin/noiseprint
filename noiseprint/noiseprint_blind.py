@@ -35,10 +35,13 @@ def noiseprint_blind_file(filename, model_name='net'):
     mapp, valid, range0, range1, imgsize, other = noiseprint_blind(img, QF, model_name=model_name)
     return QF, mapp, valid, range0, range1, imgsize, other
 
-def noiseprint_blind(img, QF, model_name='net'):
+def noiseprint_blind(img, QF, model_name='net', return_noiseprint=False):
     res = genNoiseprint(img, QF, model_name)
     assert(img.shape==res.shape)
-    return noiseprint_blind_post(res, img)
+    if return_noiseprint:
+        return res, noiseprint_blind_post(res, img)
+    else:
+        return noiseprint_blind_post(res, img)
 
 def noiseprint_blind_post(res, img):
     spam, valid, range0, range1, imgsize = getSpamFromNoiseprint(res, img)
