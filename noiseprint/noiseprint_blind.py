@@ -33,7 +33,7 @@ def noiseprint_blind_file(filename, model_name='net',return_noiseprint=False):
         QF = 200
         
     if return_noiseprint:
-        noiseprint , mapp, valid, range0, range1, imgsize, other = noiseprint_blind(img, QF, model_name=model_name,return_noiseprint=True)
+        noiseprint , (mapp, valid, range0, range1, imgsize, other) = noiseprint_blind(img, QF, model_name=model_name,return_noiseprint=True)
         return noiseprint , QF, mapp, valid, range0, range1, imgsize, other
     else:
         mapp, valid, range0, range1, imgsize, other = noiseprint_blind(img, QF, model_name=model_name,return_noiseprint=False)
