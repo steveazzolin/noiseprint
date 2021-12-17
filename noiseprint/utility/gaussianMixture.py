@@ -14,7 +14,7 @@ from numpy.linalg import cholesky
 from numpy.linalg import eigh
 
 from numba import jit
-#import torch
+import torch
 
 class gm:
     prioriProb = 0
@@ -189,10 +189,10 @@ class gm:
 
     @staticmethod
     def tmp(lowMtx, Xmu):
-        return np.linalg.solve(lowMtx, Xmu.transpose()).transpose()
-        #lowMtx, Xmu = torch.tensor(lowMtx, device="cuda") , torch.tensor(Xmu, device="cuda")
-        #sa = torch.linalg.solve(lowMtx, Xmu.T).T
-        #return sa.cpu().numpy()
+        #return np.linalg.solve(lowMtx, Xmu.transpose()).transpose()
+        lowMtx, Xmu = torch.tensor(lowMtx, device="cuda") , torch.tensor(Xmu, device="cuda")
+        sa = torch.linalg.solve(lowMtx, Xmu.T).T
+        return sa.cpu().numpy()
 
     def getLoglh(self, X):
         nlogl, _ = self.getNlogl(X)
